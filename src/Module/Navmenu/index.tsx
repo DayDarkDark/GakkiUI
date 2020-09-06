@@ -10,6 +10,7 @@ function Navmenu() {
 
 
 	const create = () => {
+		// 触发指令 1
 		setDirect(1)
 	}
   return(
