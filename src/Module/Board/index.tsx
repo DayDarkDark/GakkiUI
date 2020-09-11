@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
-import Konva from 'konva'
 import { operateDirect } from '../../Store'
 import CanvasRenderer from '../../Core/render'
 import './board.scss'
@@ -9,7 +8,7 @@ import './board.scss'
  * 创建Scence
  */
 
-const Board= () => {
+const Board = () => {
   const ref = useRef(null)
   const board = useRef({})
 
@@ -23,14 +22,12 @@ const Board= () => {
 
   // 操作指令改变
   useEffect(() => {
-
     const DRIECT_COLLECTION_CREATE = 1
     switch(direct) {
       case DRIECT_COLLECTION_CREATE:
         const renderer = board.current as CanvasRenderer
-        const target = document.querySelector('.board') as HTMLElement
-        target.style.cursor = 'crosshair'
         renderer.customCreate()
+        // 调用自定义配置方法 render callback
         break;
       default: 
         console.info('out')

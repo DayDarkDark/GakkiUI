@@ -30,17 +30,17 @@ export default class CanvasRenderer {
     this.layer.add(rect)
     let x1:any, y1:any, x2:any, y2:any
     this.triggerPushSet.push(function () {
-        const target = document.querySelector('.board') as HTMLElement
-        target.style.cursor = 'crosshair'
-        const position = this.stage.getPointerPosition()
-        x1 = position?.x
-        x2 = position?.x
-        y1 = position?.y
-        y2 = position?.y
-        rect.visible(true)
-        rect.width(0)
-        rect.height(0)
-        this.layer.draw()
+      const target = document.querySelector('.board') as HTMLElement
+      target.style.cursor = 'crosshair'
+      const position = this.stage.getPointerPosition()
+      x1 = position?.x
+      x2 = position?.x
+      y1 = position?.y
+      y2 = position?.y
+      rect.visible(true)
+      rect.width(0)
+      rect.height(0)
+      this.layer.draw()
     }.bind(this))
 
     this.triggerIngSet.push(function(){
@@ -55,6 +55,14 @@ export default class CanvasRenderer {
         })
         this.layer.batchDraw()
     }.bind(this))
+
+    this.triggerPullSet.push(function() {
+      this.triggerPushSet.length = 0
+      this.triggerIngSet.length = 0
+      const target = document.querySelector('.board') as HTMLElement
+      target.style.cursor = 'normal'
+      this.triggerPullSet.length = 0
+    }.bind(this))
   }
 
 
@@ -66,16 +74,15 @@ export default class CanvasRenderer {
   }
   triggerPush () {
     console.info('推进')
-    console.info(this.triggerPushSet)
     this.triggerPushSet.forEach(e => e())
   }
-  triggerIng() {
-    console.info('移动')
+  triggerIng(e:any) {
+    console.info(e)
     this.triggerIngSet.forEach(e => e())
   }
 
   triggerPull() {
-    console.info('弹出')
+    console.info('弹出', this)
     this.triggerPullSet.forEach(e => e())
   }
 
